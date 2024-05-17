@@ -1,15 +1,4 @@
-import 'dart:async';
 
-import 'package:firebase_storage/firebase_storage.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:image_picker/image_picker.dart';
-import 'dart:io';
-import 'package:waves/services/notification.dart';
-import 'package:waves/model/post.dart';
-import 'package:waves/constants.dart';
-import 'package:waves/services/account.dart';
 
 class PostService {
   static final _firestore = FirebaseFirestore.instance;
