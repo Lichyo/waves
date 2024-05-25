@@ -21,8 +21,8 @@ class _JointEventPageState extends State<ChooseLocationPage> {
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => HostEventPage(
-                  location: item,
+                builder: (context) => SearchPostPage(
+                  // location: item,
                 ),
               ),
             );

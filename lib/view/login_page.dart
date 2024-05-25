@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:waves/view/home_page.dart';
+import 'package:waves/view/profile_page.dart';
 import 'package:waves/view/registration_page.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:waves/services/account.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -23,8 +25,9 @@ class _LoginPageState extends State<LoginPage> {
     SchedulerBinding.instance.addPostFrameCallback((_) {
       User? user = _auth.currentUser;
       if (user != null) {
+        AccountService.fetchAccount();
         Navigator.push(
-            context, MaterialPageRoute(builder: (context) => HomePage()));
+            context, MaterialPageRoute(builder: (context) => const HomePage()));
       }
     });
   }
@@ -45,7 +48,7 @@ class _LoginPageState extends State<LoginPage> {
             children: [
               Expanded(
                 child: Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 20),
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -56,7 +59,8 @@ class _LoginPageState extends State<LoginPage> {
                         keyboardType: TextInputType.emailAddress,
                         textAlign: TextAlign.center,
                         decoration: InputDecoration(
-                          contentPadding: EdgeInsets.only(top: 20,bottom: 20),
+                          contentPadding:
+                          const EdgeInsets.only(top: 20, bottom: 20),
                           hintText: 'enter your email',
                           enabledBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(50),
@@ -76,7 +80,8 @@ class _LoginPageState extends State<LoginPage> {
                         obscureText: true,
                         textAlign: TextAlign.center,
                         decoration: InputDecoration(
-                          contentPadding: EdgeInsets.only(left: 45,top: 20,bottom: 20),
+                          contentPadding: const EdgeInsets.only(
+                              left: 45, top: 20, bottom: 20),
                           hintText: 'enter your password',
                           enabledBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(50),
@@ -85,7 +90,7 @@ class _LoginPageState extends State<LoginPage> {
                             borderRadius: BorderRadius.circular(50),
                           ),
                           suffixIcon: IconButton(
-                            icon: Icon(
+                            icon: const Icon(
                               Icons.arrow_circle_right_rounded,
                               size: 35,
                               color: Colors.black38,
@@ -93,13 +98,14 @@ class _LoginPageState extends State<LoginPage> {
                             onPressed: () async {
                               try {
                                 UserCredential user =
-                                    await _auth.signInWithEmailAndPassword(
-                                        email: email, password: password);
-                                // _auth.setPersistence(Persistence.LOCAL);
+                                await _auth.signInWithEmailAndPassword(
+                                    email: email, password: password);
+                                await AccountService.fetchAccount();
                                 Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                        builder: (context) => HomePage()));
+                                        builder: (context) =>
+                                        const HomePage()));
                               } catch (e) {
                                 print(e);
                               }
@@ -115,11 +121,15 @@ class _LoginPageState extends State<LoginPage> {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => RegistrationPage()));
+                                  builder: (context) =>
+                                  const RegistrationPage()));
                         },
-                        child: Text("Don't have any account?",style: TextStyle(
-                          // backgroundColor:Colors.grey,
-                        ),),
+                        child: const Text(
+                          "Don't have any account?",
+                          style: TextStyle(
+                            // backgroundColor:Colors.grey,
+                          ),
+                        ),
                       ),
                     ],
                   ),
